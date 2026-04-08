@@ -115,7 +115,7 @@ select{padding-right:24px;min-width:130px}
     <h1>Dashboard Auto Car Vistoria</h1>
     <p>Grupo Auto Car — Gestão Operacional e Financeira</p>
   </div>
-  <div class="h-updated">Atualizado em<br><strong>07/04/2026 23:13</strong></div>
+  <div class="h-updated">Atualizado em<br><strong>07/04/2026 23:30</strong></div>
 </header>
 
 <!-- ── Filter bar ── -->
@@ -172,15 +172,16 @@ select{padding-right:24px;min-width:130px}
     <div class="kpi-card" id="kpi-loja-an"></div>
   </div>
   <div class="chart-row c1"><div class="chart-card"><div id="ch-vis-mes"></div></div></div>
+  <div class="chart-row c2">
+    <div class="chart-card"><div id="ch-vistoriadores"></div></div>
+    <div class="chart-card"><div id="ch-weekday"></div></div>
+  </div>
   <div class="chart-row c3">
     <div class="chart-card"><div id="ch-status"></div></div>
     <div class="chart-card"><div id="ch-tipo"></div></div>
     <div class="chart-card"><div id="ch-taxa-aprov"></div></div>
   </div>
-  <div class="chart-row c2">
-    <div class="chart-card"><div id="ch-vistoriadores"></div></div>
-    <div class="chart-card"><div id="ch-forma-pag-vis"></div></div>
-  </div>
+  <div class="chart-row c1"><div class="chart-card"><div id="ch-forma-pag-vis"></div></div></div>
 </div>
 
 <!-- ── Faturamento ── -->
@@ -193,6 +194,7 @@ select{padding-right:24px;min-width:130px}
     <div class="kpi-card" id="kpi-n-rec"></div>
   </div>
   <div class="chart-row c1"><div class="chart-card"><div id="ch-rec-mes"></div></div></div>
+  <div class="chart-row c1"><div class="chart-card"><div id="ch-rec-loja"></div></div></div>
   <div class="chart-row c3">
     <div class="chart-card"><div id="ch-rec-tipo"></div></div>
     <div class="chart-card"><div id="ch-rec-metodo"></div></div>
@@ -227,10 +229,7 @@ select{padding-right:24px;min-width:130px}
     <div class="kpi-card" id="kpi-fl-saldo"></div>
     <div class="kpi-card" id="kpi-fl-prox30" style="border-color:#FF9800"></div>
   </div>
-  <div class="chart-row c2">
-    <div class="chart-card"><div id="ch-fl-barras"></div></div>
-    <div class="chart-card"><div id="ch-fl-saldo"></div></div>
-  </div>
+  <div class="chart-row c1"><div class="chart-card"><div id="ch-fl-combo"></div></div></div>
   <div class="chart-row c1">
     <div class="chart-card">
       <div class="card-title">Próximos Vencimentos — A Pagar</div>
@@ -347,7 +346,7 @@ function groupSum(arr, key, valKey) {
 }
 
 // ── KPI updater ───────────────────────────────────────────────────────────
-function kpi(id, label, val, prevVal, sub='', color=C.gold) {
+function kpi(id, label, val, prevVal, sub='', color=C.gold, isCurrency=false) {
   const el = document.getElementById(id);
   if (!el) return;
   let trend = '';
@@ -356,9 +355,14 @@ function kpi(id, label, val, prevVal, sub='', color=C.gold) {
     const up = delta >= 0;
     trend = `<div class="trend ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(delta).toFixed(1)}% vs per. ant.</div>`;
   }
-  const display = typeof val === 'number' && val >= 1000
-    ? (Number.isInteger(val) ? N(val) : BRL(val))
-    : (val === null ? '—' : val);
+  let display;
+  if (val === null) display = '—';
+  else if (typeof val === 'number') {
+    const abs = Math.abs(val);
+    if (abs >= 1000 || (isCurrency && abs > 0))
+      display = (isCurrency || !Number.isInteger(val)) ? BRL(val) : N(val);
+    else display = val;
+  } else display = val;
   el.innerHTML =
     `<div class="label">${label}</div>`+
     `<div class="value" style="color:${color}">${display}</div>`+
@@ -404,12 +408,29 @@ function renderOp({vis}, prev) {
   });
   const mks = Object.keys(mesLoja).sort();
   const mlabels = mks.map(monthLabel);
+  const mTotals = mks.map(k=>Object.values(mesLoja[k]).reduce((s,v)=>s+v,0));
+  const mMomPct = mTotals.map((v,i)=>i===0||!mTotals[i-1]?null:((v-mTotals[i-1])/mTotals[i-1]*100));
+  const mMomX = mlabels.filter((_,i)=>mMomPct[i]!==null);
+  const mMomY = mTotals.filter((_,i)=>mMomPct[i]!==null).map(v=>v*1.1);
+  const mMomTxt = mMomPct.filter(p=>p!==null).map(p=>`${p>=0?'▲':'▼'}${Math.abs(p).toFixed(1)}%`);
+  const mMomClr = mMomPct.filter(p=>p!==null).map(p=>p>=0?C.green:C.red);
 
   Plotly.react('ch-vis-mes',
-    lojas.map((l,i)=>({type:'bar',name:lojaLabels[i],x:mlabels,
-      y:mks.map(k=>mesLoja[k][l]),marker:{color:PALETTE[i]}})),
+    [...lojas.map((l,i)=>({type:'bar',name:lojaLabels[i],x:mlabels,
+      y:mks.map(k=>mesLoja[k][l]),marker:{color:PALETTE[i]},
+      text:mks.map(k=>mesLoja[k][l]>0?mesLoja[k][l]:''),
+      textposition:'inside',textfont:{size:10},insidetextanchor:'middle',
+      hovertemplate:'%{x} — '+lojaLabels[i]+': %{y}<extra></extra>'})),
+     {type:'scatter',name:'Total',x:mlabels,y:mTotals,mode:'lines+markers',
+      line:{color:'#FFF',width:2},marker:{color:'#FFF',size:5},
+      hovertemplate:'%{x}: %{y} vistorias<extra></extra>'},
+     {type:'scatter',x:mMomX,y:mMomY,mode:'text',
+      text:mMomTxt,textfont:{size:10,color:mMomClr},
+      showlegend:false,hoverinfo:'none'}],
     L({title:{text:'Vistorias por Mês e Loja',font:{color:C.gold,size:13}},
-       barmode:'stack',height:340,xaxis:{...L().xaxis,tickangle:mks.length>8?-45:0}}), CFG);
+       barmode:'stack',height:360,
+       xaxis:{...L().xaxis,tickangle:mks.length>8?-45:0},
+       legend:{orientation:'h',y:1.03,x:0,font:{size:11}}}), CFG);
 
   // Status donut
   Plotly.react('ch-status',
@@ -450,21 +471,44 @@ function renderOp({vis}, prev) {
   const vmap = groupSum(vis,'VISTORIADOR');
   const vkeys = Object.keys(vmap).sort((a,b)=>vmap[b]-vmap[a]).slice(0,10);
   const vlabels = vkeys.map(v=>{const p=v.split(' ');return p[0]+' '+p[p.length-1];});
+  const vTotal = vkeys.reduce((s,k)=>s+vmap[k],0);
   Plotly.react('ch-vistoriadores',
     [{type:'bar',orientation:'h',x:vkeys.map(k=>vmap[k]),y:vlabels,
-      marker:{color:C.goldL},text:vkeys.map(k=>vmap[k]),textposition:'outside',
+      marker:{color:vkeys.map((_,i)=>i===0?C.gold:C.goldD)},
+      text:vkeys.map(k=>`${vmap[k]}  (${vTotal?((vmap[k]/vTotal)*100).toFixed(1)+'%':'—'})`),
+      textposition:'outside',textfont:{size:11},
       hovertemplate:'%{y}: %{x} vistorias<extra></extra>'}],
-    L({title:{text:'Top Vistoriadores',font:{color:C.gold,size:13}},height:340,
-       xaxis:{...L().xaxis,showgrid:false},yaxis:{...L().yaxis,autorange:'reversed'}}), CFG);
+    L({title:{text:'Ranking de Vistoriadores',font:{color:C.gold,size:13}},height:360,
+       xaxis:{...L().xaxis,showgrid:false},yaxis:{...L().yaxis,autorange:'reversed'},
+       margin:{t:42,l:8,r:120,b:36}}), CFG);
+
+  // Dia da semana
+  const diasSemana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const wdCounts = [0,0,0,0,0,0,0];
+  vis.forEach(r => { if(r._d) wdCounts[r._d.getDay()]++; });
+  const wdMax = Math.max(...wdCounts);
+  Plotly.react('ch-weekday',
+    [{type:'bar',x:diasSemana,y:wdCounts,
+      marker:{color:wdCounts.map((v,i)=>v===wdMax?C.gold:i===0?'#2A2A2A':C.goldD)},
+      text:wdCounts,textposition:'outside',textfont:{size:12,color:'#FFF'},
+      hovertemplate:'%{x}: %{y} vistorias<extra></extra>'}],
+    L({title:{text:'Vistorias por Dia da Semana',font:{color:C.gold,size:13}},
+       height:360,showlegend:false,
+       xaxis:{...L().xaxis,showgrid:false},
+       yaxis:{...L().yaxis,showgrid:false}}), CFG);
 
   // Forma pagamento vistorias
   const fpmap = groupSum(vis,'FORMAPAGAMENTO');
   const fpkeys = Object.keys(fpmap).filter(k=>k!=='null'&&k!=='Outros');
   Plotly.react('ch-forma-pag-vis',
-    [{type:'pie',hole:.55,labels:fpkeys,values:fpkeys.map(k=>fpmap[k]),
-      marker:{colors:PALETTE},textinfo:'percent+label',
-      hovertemplate:'%{label}: %{value}<extra></extra>'}],
-    L({title:{text:'Forma de Pagamento (Vistorias)',font:{color:C.gold,size:13}},height:340,showlegend:false}), CFG);
+    [{type:'bar',orientation:'h',x:fpkeys.map(k=>fpmap[k]),y:fpkeys,
+      marker:{color:PALETTE.slice(0,fpkeys.length)},
+      text:fpkeys.map(k=>fpmap[k]),textposition:'outside',textfont:{size:12},
+      hovertemplate:'%{y}: %{x}<extra></extra>'}],
+    L({title:{text:'Forma de Pagamento — Vistorias',font:{color:C.gold,size:13}},
+       height:260,showlegend:false,
+       xaxis:{...L().xaxis,showgrid:false},
+       yaxis:{...L().yaxis,autorange:'reversed'}}), CFG);
 }
 
 // ── RENDER FATURAMENTO ────────────────────────────────────────────────────
@@ -476,29 +520,67 @@ function renderFat({rec}, prev) {
   const pr = prev?.rec;
   const pt = pr?.reduce((s,r)=>s+(r.valor_recebido||0),0);
 
-  kpi('kpi-rec-total', 'Receita Total',  total,  pt,  '', C.gold);
+  kpi('kpi-rec-total', 'Receita Total',  total,  pt,  '', C.gold, true);
   kpi('kpi-rec-pago',  'Recebido',       pago,   pr?.filter(r=>r.status_pagamento==='Pago').reduce((s,r)=>s+(r.valor_recebido||0),0),
-      total?`${(pago/total*100).toFixed(1)}% do total`:'', C.green);
+      total?`${(pago/total*100).toFixed(1)}% do total`:'', C.green, true);
   kpi('kpi-rec-aberto','Em Aberto',      aberto, null,
-      total?`${(aberto/total*100).toFixed(1)}% do total`:'', C.orange);
-  kpi('kpi-ticket',    'Ticket Médio',   parseFloat(ticket.toFixed(2)), null, `${rec.length} recebimentos`);
+      total?`${(aberto/total*100).toFixed(1)}% do total`:'', C.orange, true);
+  kpi('kpi-ticket',    'Ticket Médio',   parseFloat(ticket.toFixed(2)), null, `${rec.length} recebimentos`, C.gold, true);
   kpi('kpi-n-rec',     'Recebimentos',   rec.length, pr?.length, 'no período');
 
-  // Receita mensal com linha de tendência
+  // Receita mensal com linha de tendência e MoM%
   const rm = byMonth(rec,'_d','valor_recebido');
   const rmk = Object.keys(rm).sort();
   const rml = rmk.map(monthLabel);
   const rmy = rmk.map(k=>rm[k]);
+  const rmMom = rmy.map((v,i)=>i===0||!rmy[i-1]?null:((v-rmy[i-1])/rmy[i-1]*100));
+  const rmMomX = rml.filter((_,i)=>rmMom[i]!==null);
+  const rmMomY = rmy.filter((_,i)=>rmMom[i]!==null).map(v=>v*1.22);
+  const rmMomTxt = rmMom.filter(p=>p!==null).map(p=>`${p>=0?'▲':'▼'}${Math.abs(p).toFixed(1)}%`);
+  const rmMomClr = rmMom.filter(p=>p!==null).map(p=>p>=0?C.green:C.red);
   Plotly.react('ch-rec-mes',
-    [{type:'bar',x:rml,y:rmy,marker:{color:C.gold},
-      text:rmy.map(BRL),textposition:'outside',textfont:{size:9},
-      hovertemplate:'%{x}: %{text}<extra></extra>',name:'Receita'},
+    [{type:'bar',x:rml,y:rmy,name:'Receita',marker:{color:C.gold},
+      text:rmy.map(v=>`R$${(v/1000).toFixed(0)}k`),textposition:'inside',
+      textfont:{size:11,color:'#111'},
+      hovertemplate:'%{x}: R$ %{y:,.2f}<extra></extra>'},
      {type:'scatter',x:rml,y:rmy,mode:'lines+markers',name:'Tendência',
-      line:{color:C.orange,width:2,dash:'dot'},
-      marker:{color:C.orange,size:5},
-      hovertemplate:'%{x}: %{text}<extra></extra>',text:rmy.map(BRL)}],
-    L({title:{text:'Receita Mensal',font:{color:C.gold,size:13}},height:320,barmode:'overlay',
-       showlegend:true,legend:{orientation:'h',y:-.1}}), CFG);
+      line:{color:C.orange,width:2,dash:'dot'},marker:{color:C.orange,size:6},
+      hoverinfo:'skip'},
+     {type:'scatter',x:rmMomX,y:rmMomY,mode:'text',
+      text:rmMomTxt,textfont:{size:11,color:rmMomClr},
+      showlegend:false,hoverinfo:'none'}],
+    L({title:{text:'Receita Mensal',font:{color:C.gold,size:13}},height:340,
+       showlegend:true,legend:{orientation:'h',y:1.03,x:0}}), CFG);
+
+  // Receita por loja por mês
+  const recLojas = ['Goiania','Prime','Anapolis'];
+  const recLojaLbls = ['Goiânia','Prime','Anápolis'];
+  const recMesLoja = {};
+  rec.forEach(r => {
+    if(!r._d||!r.loja) return;
+    const mk = r._d.getFullYear()+'-'+String(r._d.getMonth()+1).padStart(2,'0');
+    if(!recMesLoja[mk]) recMesLoja[mk]={Goiania:0,Prime:0,Anapolis:0};
+    if(recMesLoja[mk][r.loja]!==undefined) recMesLoja[mk][r.loja]+=r.valor_recebido||0;
+  });
+  const rmlk = Object.keys(recMesLoja).sort();
+  if (rmlk.length > 0) {
+    const rmll = rmlk.map(monthLabel);
+    Plotly.react('ch-rec-loja',
+      recLojas.map((l,i)=>({
+        type:'bar',name:recLojaLbls[i],x:rmll,
+        y:rmlk.map(k=>recMesLoja[k][l]),
+        marker:{color:PALETTE[i]},
+        text:rmlk.map(k=>recMesLoja[k][l]>0?`R$${(recMesLoja[k][l]/1000).toFixed(0)}k`:''),
+        textposition:'inside',textfont:{size:10},insidetextanchor:'middle',
+        hovertemplate:'%{x} — '+recLojaLbls[i]+': R$ %{y:,.2f}<extra></extra>'
+      })),
+      L({title:{text:'Receita por Loja por Mês',font:{color:C.gold,size:13}},
+         height:300,barmode:'group',
+         legend:{orientation:'h',y:1.03,x:0},
+         xaxis:{...L().xaxis,tickangle:rmlk.length>8?-45:0}}), CFG);
+  } else {
+    document.getElementById('ch-rec-loja').innerHTML='<div class="empty">Preencha a coluna "loja" em Contas a Receber para ver este gráfico</div>';
+  }
 
   // Particular vs Despachante
   const ct = groupSum(rec,'conta','valor_recebido');
@@ -553,14 +635,14 @@ function renderDep({pag, vis}, prev) {
   const pp = prev?.pag;
   const pt = pp?.reduce((s,r)=>s+(r.valor||0),0);
 
-  kpi('kpi-dep-total', 'Total Lançado',   total,  pt, 'no período');
+  kpi('kpi-dep-total', 'Total Lançado',   total,  pt, 'no período', C.gold, true);
   kpi('kpi-dep-pago',  'Total Pago',      pgDone, pp?.filter(r=>r.status==='Pago').reduce((s,r)=>s+(r.valor||0),0),
-      total?`${(pgDone/total*100).toFixed(1)}% do total`:'', C.green);
+      total?`${(pgDone/total*100).toFixed(1)}% do total`:'', C.green, true);
   kpi('kpi-dep-apagar','A Pagar',         apagar, null,
-      total?`${(apagar/total*100).toFixed(1)}% do total`:'', C.red);
+      total?`${(apagar/total*100).toFixed(1)}% do total`:'', C.red, true);
   kpi('kpi-custo-vis', 'Custo / Vistoria',
       parseFloat(custoPorVis.toFixed(2)), null,
-      nVis?`${nVis.toLocaleString('pt-BR')} vistorias no período`:'sem vistorias');
+      nVis?`${nVis.toLocaleString('pt-BR')} vistorias no período`:'sem vistorias', C.gold, true);
 
   // Por categoria
   const cat = groupSum(pag.filter(r=>r.conta),'conta','valor');
@@ -592,18 +674,31 @@ function renderDep({pag, vis}, prev) {
     L({title:{text:'Status Pagamento',font:{color:C.gold,size:13}},height:220,
        legend:{orientation:'h',y:-.15}}), CFG);
 
-  // Evolução mensal
+  // Evolução mensal de despesas: barras + linha + MoM%
   const dm = byMonth(pag,'_d','valor');
   const dmk = Object.keys(dm).sort();
   const dml = dmk.map(monthLabel);
   const dmy = dmk.map(k=>dm[k]);
+  const dmMom = dmy.map((v,i)=>i===0||!dmy[i-1]?null:((v-dmy[i-1])/dmy[i-1]*100));
+  const dmMomX = dml.filter((_,i)=>dmMom[i]!==null);
+  const dmMomY = dmy.filter((_,i)=>dmMom[i]!==null).map(v=>v*1.22);
+  const dmMomTxt = dmMom.filter(p=>p!==null).map(p=>`${p>=0?'▲':'▼'}${Math.abs(p).toFixed(1)}%`);
+  const dmMomClr = dmMom.filter(p=>p!==null).map(p=>p>=0?C.red:C.green); // subida de despesa=ruim=vermelho
   Plotly.react('ch-dep-mes',
-    [{type:'scatter',x:dml,y:dmy,mode:'lines+markers',
-      line:{color:C.red,width:2},marker:{color:C.red,size:6},
-      fill:'tozeroy',fillcolor:'rgba(239,83,80,.08)',
-      hovertemplate:'%{x}: R$ %{y:,.2f}<extra></extra>'}],
-    L({title:{text:'Evolução Mensal de Despesas',font:{color:C.gold,size:13}},height:280,
-       yaxis:{...L().yaxis,tickformat:',.0f'}}), CFG);
+    [{type:'bar',x:dml,y:dmy,name:'Despesas',
+      marker:{color:'rgba(239,83,80,0.75)'},
+      text:dmy.map(v=>`R$${(v/1000).toFixed(0)}k`),textposition:'inside',
+      textfont:{size:11,color:'#FFF'},
+      hovertemplate:'%{x}: R$ %{y:,.2f}<extra></extra>'},
+     {type:'scatter',x:dml,y:dmy,name:'Tendência',mode:'lines+markers',
+      line:{color:C.orange,width:2},marker:{color:C.orange,size:6},
+      hoverinfo:'skip'},
+     {type:'scatter',x:dmMomX,y:dmMomY,mode:'text',
+      text:dmMomTxt,textfont:{size:11,color:dmMomClr},
+      showlegend:false,hoverinfo:'none'}],
+    L({title:{text:'Evolução Mensal de Despesas',font:{color:C.gold,size:13}},height:320,
+       yaxis:{...L().yaxis,tickformat:',.0f'},
+       legend:{orientation:'h',y:1.03,x:0}}), CFG);
 }
 
 // ── RENDER FLUXO ──────────────────────────────────────────────────────────
@@ -631,30 +726,37 @@ function renderFl({pag, rec}, prev) {
   const ppEnt = pp?.rec.reduce((s,r)=>s+(r.valor_recebido||0),0);
   const ppSai = pp?.pag.filter(r=>r.status==='Pago').reduce((s,r)=>s+(r.valor||0),0);
 
-  kpi('kpi-fl-ent',   'Entradas',     totEnt, ppEnt, 'receitas no período', C.green);
-  kpi('kpi-fl-sai',   'Saídas',       totSai, ppSai, 'despesas pagas', C.red);
+  kpi('kpi-fl-ent',   'Entradas',     totEnt, ppEnt, 'receitas no período', C.green, true);
+  kpi('kpi-fl-sai',   'Saídas',       totSai, ppSai, 'despesas pagas', C.red, true);
   kpi('kpi-fl-saldo', 'Saldo',        parseFloat(totSal.toFixed(2)), null,
-      'entradas – saídas', totSal >= 0 ? C.gold : C.red);
-  kpi('kpi-fl-prox30','Vence em 30d', parseFloat(prox30.toFixed(2)), null, 'a pagar nos próx. 30 dias', C.orange);
+      'entradas – saídas', totSal >= 0 ? C.gold : C.red, true);
+  kpi('kpi-fl-prox30','Vence em 30d', parseFloat(prox30.toFixed(2)), null, 'a pagar nos próx. 30 dias', C.orange, true);
 
-  // Entradas vs Saídas
-  Plotly.react('ch-fl-barras',
-    [{type:'bar',name:'Entradas',x:lbl,y:ent,marker:{color:C.green},
-      text:ent.map(BRL),textposition:'outside',textfont:{size:9}},
-     {type:'bar',name:'Saídas',x:lbl,y:sai,marker:{color:C.red},
-      text:sai.map(BRL),textposition:'outside',textfont:{size:9}}],
-    L({title:{text:'Entradas vs Saídas por Mês',font:{color:C.gold,size:13}},height:320,
-       barmode:'group',yaxis:{...L().yaxis,tickformat:',.0f'},showlegend:true,
-       legend:{orientation:'h',y:-.1}}), CFG);
-
-  // Saldo mensal
-  Plotly.react('ch-fl-saldo',
-    [{type:'bar',x:lbl,y:sal,
-      marker:{color:sal.map(s=>s>=0?C.green:C.red)},
-      text:sal.map(BRL),textposition:'outside',textfont:{size:9},
-      hovertemplate:'%{x}: %{text}<extra></extra>'}],
-    L({title:{text:'Saldo Mensal',font:{color:C.gold,size:13}},height:320,
-       yaxis:{...L().yaxis,tickformat:',.0f'},showlegend:false}), CFG);
+  // Combo: Entradas + Saídas (barras) + Saldo (linha eixo dir.)
+  Plotly.react('ch-fl-combo',
+    [{type:'bar',name:'Entradas',x:lbl,y:ent,
+      marker:{color:'rgba(102,187,106,0.85)'},
+      text:ent.map(v=>`R$${(v/1000).toFixed(0)}k`),textposition:'inside',
+      textfont:{size:11,color:'#FFF'},
+      hovertemplate:'%{x} Entradas: R$ %{y:,.2f}<extra></extra>',yaxis:'y'},
+     {type:'bar',name:'Saídas',x:lbl,y:sai,
+      marker:{color:'rgba(239,83,80,0.85)'},
+      text:sai.map(v=>`R$${(v/1000).toFixed(0)}k`),textposition:'inside',
+      textfont:{size:11,color:'#FFF'},
+      hovertemplate:'%{x} Saídas: R$ %{y:,.2f}<extra></extra>',yaxis:'y'},
+     {type:'scatter',name:'Saldo',x:lbl,y:sal,mode:'lines+markers+text',
+      line:{color:C.gold,width:2.5},
+      marker:{color:sal.map(s=>s>=0?C.green:C.red),size:9},
+      text:sal.map(v=>`R$${(v/1000).toFixed(0)}k`),textposition:'top center',
+      textfont:{size:10,color:C.gold},
+      hovertemplate:'%{x} Saldo: R$ %{y:,.2f}<extra></extra>',yaxis:'y2'}],
+    L({title:{text:'Entradas vs Saídas + Saldo por Mês',font:{color:C.gold,size:13}},
+       height:420,barmode:'group',showlegend:true,
+       legend:{orientation:'h',y:1.03,x:0},
+       yaxis:{...L().yaxis,tickformat:',.0f',title:{text:'R$',font:{color:C.muted,size:10}}},
+       yaxis2:{overlaying:'y',side:'right',tickformat:',.0f',gridcolor:'transparent',
+               linecolor:'#333',tickfont:{color:C.gold,size:10},
+               title:{text:'Saldo',font:{color:C.gold,size:10}}}}), CFG);
 
   // Tabela vencimentos
   const today = new Date(); today.setHours(0,0,0,0);
