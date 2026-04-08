@@ -10,107 +10,110 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{background:#0D0D0D;color:#FFF;font-family:Calibri,Arial,sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden}
+body{background:#0D0D0D;color:#FFF;font-family:Calibri,Arial,sans-serif;font-size:15px;min-height:100vh;overflow-x:hidden;max-width:1920px;margin-left:auto;margin-right:auto}
 
 /* Header */
-header{display:flex;align-items:center;padding:12px 24px;background:#1A1A1A;border-bottom:2px solid #C8960C;gap:14px;position:sticky;top:0;z-index:100}
-header img{height:44px;flex-shrink:0}
-.h-title h1{color:#C8960C;font-size:19px;font-weight:bold;line-height:1.2}
-.h-title p{color:#888;font-size:12px;margin-top:2px}
-.h-updated{margin-left:auto;color:#888;font-size:11px;text-align:right;line-height:1.6;flex-shrink:0}
-.h-updated strong{color:#C8960C;font-size:13px}
+header{display:flex;align-items:center;padding:14px 32px;background:#1A1A1A;border-bottom:2px solid #C8960C;gap:14px;position:sticky;top:0;z-index:100}
+header img{height:48px;flex-shrink:0}
+.h-title h1{color:#C8960C;font-size:21px;font-weight:bold;line-height:1.2}
+.h-title p{color:#888;font-size:13px;margin-top:2px}
+.h-updated{margin-left:auto;color:#888;font-size:12px;text-align:right;line-height:1.6;flex-shrink:0}
+.h-updated strong{color:#C8960C;font-size:14px}
 
 /* Filter bar */
-.filter-bar{background:#111;border-bottom:1px solid #2A2A2A;padding:10px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filter-bar{background:#111;border-bottom:1px solid #2A2A2A;padding:10px 32px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .period-group{display:flex;gap:4px;flex-wrap:wrap}
-.period-btn{padding:6px 13px;background:#1E1E1E;border:1px solid #333;color:#AAA;border-radius:4px;cursor:pointer;font-size:13px;font-family:inherit;transition:all .15s;white-space:nowrap;min-height:34px}
+.period-btn{padding:7px 15px;background:#1E1E1E;border:1px solid #333;color:#AAA;border-radius:4px;cursor:pointer;font-size:14px;font-family:inherit;transition:all .15s;white-space:nowrap;min-height:36px}
 .period-btn:hover{border-color:#C8960C;color:#E8B84B}
 .period-btn.active{background:#C8960C22;border-color:#C8960C;color:#C8960C;font-weight:bold}
 .filter-sep{width:1px;background:#2A2A2A;align-self:stretch;margin:0 2px}
 .filter-date{display:flex;align-items:center;gap:6px}
-.filter-date span{color:#555;font-size:13px}
-input[type=date],select{background:#1E1E1E;border:1px solid #333;color:#DDD;border-radius:4px;padding:6px 8px;font-size:13px;font-family:inherit;cursor:pointer;min-height:34px;outline:none}
+.filter-date span{color:#555;font-size:14px}
+input[type=date],select{background:#1E1E1E;border:1px solid #333;color:#DDD;border-radius:4px;padding:7px 10px;font-size:14px;font-family:inherit;cursor:pointer;min-height:36px;outline:none}
 input[type=date]:focus,select:focus{border-color:#C8960C}
-select{padding-right:24px;min-width:140px}
-.filter-label{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.4px}
+select{padding-right:28px;min-width:150px}
+.filter-label{font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.4px}
 
 /* Tabs */
-.tabs{display:flex;background:#0F0F0F;border-bottom:1px solid #222;padding:0 24px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs{display:flex;background:#0F0F0F;border-bottom:1px solid #222;padding:0 32px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .tabs::-webkit-scrollbar{display:none}
-.tab-btn{padding:14px 24px;background:none;border:none;color:#888;cursor:pointer;font-size:14px;font-family:inherit;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;min-height:46px;flex-shrink:0}
+.tab-btn{padding:15px 28px;background:none;border:none;color:#888;cursor:pointer;font-size:15px;font-family:inherit;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;min-height:50px;flex-shrink:0}
 .tab-btn:hover{color:#E8B84B}
 .tab-btn.active{color:#C8960C;border-bottom-color:#C8960C;font-weight:bold}
 
 /* Content */
-.tab-content{display:none;padding:20px 24px 48px}
+.tab-content{display:none;padding:22px 32px 56px}
 .tab-content.active{display:block}
 
 /* KPI grid */
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:20px}
-.kpi-card{background:#1A1A1A;border-radius:6px;padding:16px 18px;border-left:4px solid #C8960C;min-height:96px}
-.kpi-card .label{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.5px}
-.kpi-card .value{font-size:26px;font-weight:bold;color:#C8960C;margin:6px 0 2px;line-height:1.1}
-.kpi-card .trend{font-size:12px;margin-bottom:2px}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:14px;margin-bottom:22px}
+.kpi-card{background:#1A1A1A;border-radius:6px;padding:18px 20px;border-left:4px solid #C8960C;min-height:100px}
+.kpi-card .label{font-size:13px;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.kpi-card .value{font-size:clamp(14px,2.2vw,26px);font-weight:bold;color:#C8960C;margin:8px 0 4px;line-height:1.15;word-break:break-word}
+.kpi-card .trend{font-size:13px;margin-bottom:2px}
 .kpi-card .trend.up{color:#66BB6A}
 .kpi-card .trend.down{color:#EF5350}
-.kpi-card .sub{font-size:12px;color:#666}
+.kpi-card .sub{font-size:13px;color:#666}
 
 /* Chart grid */
-.chart-row{display:grid;gap:14px;margin-bottom:14px}
+.chart-row{display:grid;gap:16px;margin-bottom:16px}
 .c1{grid-template-columns:1fr}
 .c2{grid-template-columns:1fr 1fr}
 .c3{grid-template-columns:1fr 1fr 1fr}
 .c21{grid-template-columns:2fr 1fr}
 .c12{grid-template-columns:1fr 2fr}
-.chart-card{background:#1A1A1A;border-radius:6px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.5)}
-.card-title{font-size:14px;font-weight:bold;color:#C8960C;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2A2A2A;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between}
+.chart-card{background:#1A1A1A;border-radius:6px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.card-title{font-size:15px;font-weight:bold;color:#C8960C;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #2A2A2A;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between}
 
-/* Table */
-.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.data-table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
-.data-table th{background:#222;color:#C8960C;padding:10px 12px;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
-.data-table td{padding:9px 12px;border-bottom:1px solid #1E1E1E;color:#CCC;white-space:nowrap}
+/* Table — tamanho fixo com scroll interno */
+.tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:400px;-webkit-overflow-scrolling:touch;border:1px solid #2A2A2A;border-radius:4px}
+.tbl-wrap.tbl-lg{max-height:1200px}
+.tbl-wrap thead th{position:sticky;top:0;z-index:2}
+.data-table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+.data-table th{background:#252525;color:#C8960C;padding:11px 14px;text-align:left;font-size:13px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.data-table td{padding:10px 14px;border-bottom:1px solid #1E1E1E;color:#CCC;white-space:nowrap}
 .data-table tr:hover td{background:#222}
-.badge{padding:3px 8px;border-radius:3px;font-size:11px;font-weight:bold}
+.badge{padding:4px 10px;border-radius:3px;font-size:12px;font-weight:bold}
 .badge-pago{background:rgba(102,187,106,.15);color:#66BB6A}
 .badge-apagar{background:rgba(239,83,80,.15);color:#EF5350}
 .badge-aberto{background:rgba(255,152,0,.15);color:#FF9800}
 
 /* Export button */
-.export-btn{padding:5px 14px;background:#C8960C22;border:1px solid #C8960C;color:#C8960C;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s}
+.export-btn{padding:6px 16px;background:#C8960C22;border:1px solid #C8960C;color:#C8960C;border-radius:4px;cursor:pointer;font-size:13px;font-family:inherit;transition:all .15s}
 .export-btn:hover{background:#C8960C;color:#000}
 
 /* Cobrança filter */
-.cob-filter{padding:10px 0 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.cob-filter label{font-size:12px;color:#888;text-transform:uppercase}
+.cob-filter{padding:12px 0 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.cob-filter label{font-size:13px;color:#888;text-transform:uppercase}
 
 /* Empty */
-.empty{text-align:center;padding:40px;color:#555;font-size:15px}
+.empty{text-align:center;padding:40px;color:#555;font-size:16px}
 
 /* Scrollbar */
-::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:#111}
-::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+::-webkit-scrollbar-thumb{background:#444;border-radius:3px}
 
 /* Mobile */
 @media(max-width:768px){
-  header{padding:10px 14px}
-  .h-title h1{font-size:15px}
+  header{padding:10px 16px}
+  .h-title h1{font-size:16px}
   .h-updated{display:none}
-  .filter-bar{padding:8px 14px}
+  .filter-bar{padding:8px 16px}
   .filter-sep{display:none}
   .filter-date{width:100%}
-  .tabs{padding:0 14px}
-  .tab-btn{padding:12px 16px;font-size:13px}
-  .tab-content{padding:14px 14px 60px}
-  .kpi-row{grid-template-columns:1fr 1fr;gap:8px}
-  .kpi-card{padding:12px 14px;min-height:80px}
-  .kpi-card .value{font-size:20px}
+  .tabs{padding:0 16px}
+  .tab-btn{padding:12px 18px;font-size:14px}
+  .tab-content{padding:14px 16px 60px}
+  .kpi-row{grid-template-columns:1fr 1fr;gap:10px}
+  .kpi-card{padding:12px 14px;min-height:84px}
+  .kpi-card .value{font-size:22px}
   .c2,.c3,.c21,.c12{grid-template-columns:1fr}
+  .tbl-wrap{max-height:320px}
 }
 @media(max-width:400px){
   .kpi-row{grid-template-columns:1fr}
-  .period-btn{font-size:12px}
+  .period-btn{font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -123,7 +126,7 @@ select{padding-right:24px;min-width:140px}
     <h1>Dashboard Auto Car Vistoria</h1>
     <p>Grupo Auto Car — Gestão Operacional e Financeira</p>
   </div>
-  <div class="h-updated">Atualizado em<br><strong>08/04/2026 00:12</strong></div>
+  <div class="h-updated">Atualizado em<br><strong>08/04/2026 00:49</strong></div>
 </header>
 
 <!-- Filter bar -->
@@ -190,7 +193,10 @@ select{padding-right:24px;min-width:140px}
     <div class="chart-card"><div id="ch-tipo"></div></div>
     <div class="chart-card"><div id="ch-taxa-aprov"></div></div>
   </div>
-  <div class="chart-row c1"><div class="chart-card"><div id="ch-forma-pag-vis"></div></div></div>
+  <div class="chart-row c2">
+    <div class="chart-card"><div id="ch-forma-pag-vis"></div></div>
+    <div class="chart-card"><div id="ch-taxa-vis"></div></div>
+  </div>
   <div class="chart-row c1">
     <div class="chart-card">
       <div class="card-title">Relatório de Vistorias <button class="export-btn" onclick="exportXlsx('op')">&#11015; Exportar .xlsx</button></div>
@@ -260,9 +266,14 @@ select{padding-right:24px;min-width:140px}
     <div class="kpi-card" id="kpi-fl-ent" style="border-color:#66BB6A"></div>
     <div class="kpi-card" id="kpi-fl-sai" style="border-color:#EF5350"></div>
     <div class="kpi-card" id="kpi-fl-saldo"></div>
+    <div class="kpi-card" id="kpi-fl-margem"></div>
     <div class="kpi-card" id="kpi-fl-prox30" style="border-color:#FF9800"></div>
   </div>
   <div class="chart-row c1"><div class="chart-card"><div id="ch-fl-linhas"></div></div></div>
+  <div class="chart-row c2">
+    <div class="chart-card"><div id="ch-fl-barras"></div></div>
+    <div class="chart-card"><div id="ch-fl-saldo"></div></div>
+  </div>
   <div class="chart-row c1">
     <div class="chart-card">
       <div class="card-title">Relatório Fluxo <button class="export-btn" onclick="exportXlsx('fl')">&#11015; Exportar .xlsx</button></div>
@@ -292,10 +303,14 @@ select{padding-right:24px;min-width:140px}
       <option value="Anapolis">Anápolis</option>
     </select>
   </div>
+  <div class="chart-row c2">
+    <div class="chart-card"><div id="ch-cob-evolucao"></div></div>
+    <div class="chart-card"><div id="ch-cob-porcliente"></div></div>
+  </div>
   <div class="chart-row c1">
     <div class="chart-card">
       <div class="card-title">Recebimentos em Aberto <button class="export-btn" onclick="exportXlsx('cob')">&#11015; Exportar .xlsx</button></div>
-      <div class="tbl-wrap"><div id="tbl-cob"></div></div>
+      <div class="tbl-wrap tbl-lg"><div id="tbl-cob"></div></div>
     </div>
   </div>
 </div>
@@ -320,24 +335,26 @@ _REC.forEach(r => { r._d = parseDate(r.data_pagamento); });
 const C = {
   gold:'#C8960C', goldL:'#E8B84B', goldD:'#8B6914',
   green:'#66BB6A', red:'#EF5350', orange:'#FF9800',
-  blue:'#42A5F5', dark:'#1A1A1A', plot:'#161616',
+  cyan:'#00BCD4', purple:'#AB47BC', lime:'#8BC34A',
+  dark:'#1A1A1A', plot:'#161616',
   text:'#FFF', muted:'#888',
 };
-// Loja colors (warm palette only, no blue)
-const LOJA_COLORS = {Goiania:C.gold, Prime:C.goldL, Anapolis:C.orange, Geral:C.goldD};
-const PALETTE = [C.gold, C.goldL, C.orange, C.goldD, C.green, C.red];
+// Loja colors — cores distintas para cada loja (não confundir)
+const LOJA_COLORS = {Goiania:C.gold, Prime:C.cyan, Anapolis:C.purple, Geral:'#FFFFFF'};
+// Paleta geral para donuts e outros gráficos — cores bem distintas
+const PALETTE = [C.gold, C.cyan, C.purple, C.green, C.red, C.orange, C.lime];
 const CFG = {responsive:true, displayModeBar:false};
 
 function L(extra={}) {
   return Object.assign({
     plot_bgcolor:C.plot, paper_bgcolor:C.dark,
-    font:{color:C.text, family:'Calibri,Arial,sans-serif', size:13},
-    title:{font:{color:C.gold, size:14}},
-    xaxis:{gridcolor:'#252525', linecolor:'#333', tickfont:{color:C.muted, size:12}, zeroline:false},
-    yaxis:{gridcolor:'#252525', linecolor:'#333', tickfont:{color:C.muted, size:12}, zeroline:false},
-    legend:{bgcolor:'rgba(0,0,0,0)', font:{color:C.muted, size:12}},
-    margin:{t:44, l:10, r:10, b:38},
-    hoverlabel:{bgcolor:'#2A2A2A', font:{color:C.text, size:13}, bordercolor:C.gold},
+    font:{color:C.text, family:'Calibri,Arial,sans-serif', size:14},
+    title:{font:{color:C.gold, size:15}},
+    xaxis:{gridcolor:'#252525', linecolor:'#333', tickfont:{color:C.muted, size:13}, zeroline:false},
+    yaxis:{gridcolor:'#252525', linecolor:'#333', tickfont:{color:C.muted, size:13}, zeroline:false},
+    legend:{bgcolor:'rgba(0,0,0,0)', font:{color:'#CCC', size:13}},
+    margin:{t:48, l:10, r:10, b:40},
+    hoverlabel:{bgcolor:'#2A2A2A', font:{color:C.text, size:14}, bordercolor:C.gold},
   }, extra);
 }
 
@@ -498,22 +515,26 @@ function renderOp({vis}, prev){
   const ml  = mks.map(monthLabel);
   const mTotals = mks.map(k=>Object.values(mesLoja[k]).reduce((s,v)=>s+v,0));
   const {momX,momY,momTxt,momClr} = momAnnotations(ml, mTotals);
-  const lojaLineColors = [C.gold, C.goldL, C.orange];
+  // textposition por loja para evitar sobreposição (Total=topo, Goiania=baixo, Prime=cima, Anapolis=baixo)
+  const lojaTextPos = {Goiania:'bottom center', Prime:'top center', Anapolis:'bottom center'};
   Plotly.react('ch-vis-mes',
     [...lojas.map((l,i)=>({
       type:'scatter', name:lojaLabels[i], x:ml, y:mks.map(k=>mesLoja[k][l]),
-      mode:'lines+markers', line:{color:lojaLineColors[i],width:2},
-      marker:{size:6}, hovertemplate:'%{x} — '+lojaLabels[i]+': %{y}<extra></extra>'
+      mode:'lines+markers+text', line:{color:LOJA_COLORS[l],width:2.5},
+      marker:{size:7,color:LOJA_COLORS[l]},
+      text:mks.map(k=>mesLoja[k][l]>0?mesLoja[k][l]:''),
+      textposition:lojaTextPos[l], textfont:{size:11,color:LOJA_COLORS[l]},
+      hovertemplate:'%{x} — '+lojaLabels[i]+': <b>%{y}</b><extra></extra>'
     })),
-    {type:'scatter', name:'Total', x:ml, y:mTotals, mode:'lines+markers+text',
-     line:{color:'#FFF',width:3}, marker:{size:8,color:'#FFF'},
-     text:mTotals, textposition:'top center', textfont:{size:13,color:'#FFF'},
-     hovertemplate:'%{x} Total: %{y}<extra></extra>'},
-    {type:'scatter', x:momX, y:momY.map(v=>v*1.12), mode:'text',
+    {type:'scatter', name:'Total Geral', x:ml, y:mTotals, mode:'lines+markers+text',
+     line:{color:LOJA_COLORS.Geral,width:3.5,dash:'dot'}, marker:{size:9,color:LOJA_COLORS.Geral},
+     text:mTotals, textposition:'top center', textfont:{size:12,color:LOJA_COLORS.Geral},
+     hovertemplate:'%{x} Total: <b>%{y}</b><extra></extra>'},
+    {type:'scatter', x:momX, y:momY.map(v=>v*1.25), mode:'text',
      text:momTxt, textfont:{size:12,color:momClr}, showlegend:false, hoverinfo:'none'}],
-    L({title:{text:'Vistorias por Mês e Loja',font:{color:C.gold,size:14}},
-       height:380, showlegend:true,
-       legend:{orientation:'h',y:1.04,x:0},
+    L({title:{text:'Vistorias por Mês e Loja',font:{color:C.gold,size:15}},
+       height:420, showlegend:true,
+       legend:{orientation:'h',y:1.05,x:0,font:{size:14}},
        yaxis:{...L().yaxis, rangemode:'tozero', showticklabels:false},
        xaxis:{...L().xaxis, tickangle:mks.length>8?-45:0}}), CFG);
 
@@ -526,12 +547,12 @@ function renderOp({vis}, prev){
       x:vkeys.map(k=>vmap[k]), y:vkeys,
       marker:{color:vkeys.map((_,i)=>i===0?C.gold:C.goldD)},
       text:vkeys.map(k=>`${vmap[k]}  (${vTotal?((vmap[k]/vTotal)*100).toFixed(1)+'%':'—'})`),
-      textposition:'outside', textfont:{size:13},
+      textposition:'auto', cliponaxis:false, textfont:{size:13},
       hovertemplate:'%{y}: %{x}<extra></extra>'}],
-    L({title:{text:'Ranking de Vistoriadores',font:{color:C.gold,size:14}}, height:380,
-       xaxis:{...L().xaxis,showgrid:false},
-       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:13}},
-       margin:{t:44,l:10,r:140,b:38}}), CFG);
+    L({title:{text:'Ranking de Vistoriadores',font:{color:C.gold,size:15}}, height:400,
+       xaxis:{...L().xaxis,showgrid:false,range:[0,Math.max(...Object.values(vmap))*1.4]},
+       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:14}},
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
 
   // Dia da semana
   const diasSemana=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
@@ -552,22 +573,22 @@ function renderOp({vis}, prev){
   Plotly.react('ch-status',
     [{type:'pie', hole:.6, labels:['Aprovado','Pendente DETRAN'], values:[aprov,pend],
       marker:{colors:[C.green,C.orange]}, textinfo:'percent',
-      textfont:{size:14}, hovertemplate:'%{label}: %{value}<extra></extra>'}],
-    L({title:{text:'Status',font:{color:C.gold,size:14}}, height:280,
-       legend:{orientation:'h',y:-.05,font:{size:13}}}), CFG);
+      textfont:{size:15}, hovertemplate:'%{label}: %{value}<extra></extra>'}],
+    L({title:{text:'Status',font:{color:C.gold,size:15}}, height:300,
+       legend:{orientation:'h',y:-.05,font:{size:14}}}), CFG);
 
   // Tipo de serviço
   const tipo = groupSum(vis,'TIPO');
   const tkeys = Object.keys(tipo).sort((a,b)=>tipo[b]-tipo[a]);
   Plotly.react('ch-tipo',
     [{type:'bar', orientation:'h', x:tkeys.map(k=>tipo[k]), y:tkeys,
-      marker:{color:C.gold}, text:tkeys.map(k=>tipo[k]),
-      textposition:'outside', textfont:{size:13},
+      marker:{color:PALETTE.slice(0,tkeys.length)}, text:tkeys.map(k=>tipo[k]),
+      textposition:'auto', cliponaxis:false, textfont:{size:13},
       hovertemplate:'%{y}: %{x}<extra></extra>'}],
-    L({title:{text:'Tipo de Serviço',font:{color:C.gold,size:14}}, height:280,
-       xaxis:{...L().xaxis,showgrid:false},
-       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:13}},
-       margin:{t:44,l:10,r:80,b:38}}), CFG);
+    L({title:{text:'Tipo de Serviço',font:{color:C.gold,size:15}}, height:300,
+       xaxis:{...L().xaxis,showgrid:false,range:[0,Math.max(...Object.values(tipo))*1.3]},
+       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:14}},
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
 
   // Taxa aprovação por loja
   const taxaData={};
@@ -580,10 +601,10 @@ function renderOp({vis}, prev){
   const taxas=tl.map(l=>taxaData[l].t?+(taxaData[l].a/taxaData[l].t*100).toFixed(1):0);
   Plotly.react('ch-taxa-aprov',
     [{type:'bar', x:tlbl, y:taxas,
-      marker:{color:taxas.map(t=>t>=95?C.green:t>=90?C.orange:C.red)},
-      text:taxas.map(t=>t+'%'), textposition:'outside', textfont:{size:14},
+      marker:{color:tl.map(l=>LOJA_COLORS[l]||C.goldD)},
+      text:taxas.map(t=>t+'%'), textposition:'outside', textfont:{size:15},
       hovertemplate:'%{x}: %{text}<extra></extra>'}],
-    L({title:{text:'Taxa de Aprovação por Loja (%)',font:{color:C.gold,size:14}}, height:280,
+    L({title:{text:'Taxa de Aprovação por Loja (%)',font:{color:C.gold,size:15}}, height:300,
        yaxis:{...L().yaxis,range:[80,104],showticklabels:false}, showlegend:false}), CFG);
 
   // Forma pagamento
@@ -592,12 +613,38 @@ function renderOp({vis}, prev){
   Plotly.react('ch-forma-pag-vis',
     [{type:'bar', orientation:'h', x:fpkeys.map(k=>fpmap[k]), y:fpkeys,
       marker:{color:PALETTE.slice(0,fpkeys.length)},
-      text:fpkeys.map(k=>fpmap[k]), textposition:'outside', textfont:{size:13},
+      text:fpkeys.map(k=>fpmap[k]), textposition:'auto', cliponaxis:false, textfont:{size:13},
       hovertemplate:'%{y}: %{x}<extra></extra>'}],
-    L({title:{text:'Forma de Pagamento — Vistorias',font:{color:C.gold,size:14}}, height:220,
-       xaxis:{...L().xaxis,showgrid:false},
+    L({title:{text:'Forma de Pagamento — Vistorias',font:{color:C.gold,size:15}}, height:240,
+       xaxis:{...L().xaxis,showgrid:false,range:[0,Math.max(...Object.values(fpmap))*1.3]},
+       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:14}},
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
+
+  // Taxa de aprovação por vistoriador
+  const visAprov={};
+  vis.forEach(r=>{
+    const n=r.VISTORIADOR||'Desconhecido';
+    if(!visAprov[n]) visAprov[n]={t:0,a:0};
+    visAprov[n].t++;
+    if(r.STATUS==='APROVADO') visAprov[n].a++;
+  });
+  const vaKeys=Object.keys(visAprov).filter(k=>visAprov[k].t>=5)
+    .sort((a,b)=>(visAprov[b].a/visAprov[b].t)-(visAprov[a].a/visAprov[a].t));
+  const vaTaxas=vaKeys.map(k=>+(visAprov[k].a/visAprov[k].t*100).toFixed(1));
+  const vaLabels=vaKeys.map(k=>k.split(' ')[0]+' '+k.split(' ').slice(-1)[0]);
+  Plotly.react('ch-taxa-vis',
+    [{type:'bar', orientation:'h', x:vaTaxas, y:vaLabels,
+      marker:{color:vaTaxas.map(t=>t>=97?C.green:t>=93?C.orange:C.red)},
+      text:vaTaxas.map(t=>t+'%'), textposition:'auto', cliponaxis:false, textfont:{size:13},
+      hovertemplate:'%{y}: <b>%{x}%</b><extra></extra>'}],
+    L({title:{text:'Aprovação por Vistoriador (%)',font:{color:C.gold,size:15}}, height:400,
+       xaxis:{...L().xaxis,range:[85,102],showgrid:false},
        yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:13}},
-       margin:{t:44,l:10,r:80,b:38}}), CFG);
+       shapes:[{type:'line',x0:97,x1:97,y0:-0.5,y1:vaKeys.length-0.5,
+                line:{color:C.green,width:1.5,dash:'dot'}},
+               {type:'line',x0:93,x1:93,y0:-0.5,y1:vaKeys.length-0.5,
+                line:{color:C.orange,width:1.5,dash:'dot'}}],
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
 
   // Tabela export
   const opRows = vis.slice(0,200).map(r=>`<tr>
@@ -639,17 +686,17 @@ function renderFat({rec}, prev){
   const {momX:rx,momY:ry,momTxt:rt,momClr:rc} = momAnnotations(rml, rmy);
   Plotly.react('ch-rec-mes',
     [{type:'scatter', name:'Receita', x:rml, y:rmy, mode:'lines+markers+text',
-      line:{color:C.gold,width:3}, marker:{size:8,color:C.gold},
-      text:rmy.map(v=>`R$${(v/1000).toFixed(0)}k`), textposition:'top center',
-      textfont:{size:13,color:C.gold},
-      hovertemplate:'%{x}: R$ %{y:,.2f}<extra></extra>'},
-     {type:'scatter', x:rx, y:ry.map(v=>v*1.2), mode:'text',
+      line:{color:C.gold,width:3}, marker:{size:9,color:C.gold},
+      text:rmy.map(v=>`R$${(v/1000).toFixed(1)}k`), textposition:'top center',
+      textfont:{size:12,color:C.gold},
+      hovertemplate:'%{x}: <b>R$ %{y:,.2f}</b><extra></extra>'},
+     {type:'scatter', x:rx, y:ry.map(v=>v*1.3), mode:'text',
       text:rt, textfont:{size:12,color:rc}, showlegend:false, hoverinfo:'none'}],
-    L({title:{text:'Receita Mensal',font:{color:C.gold,size:14}}, height:320,
+    L({title:{text:'Receita Mensal',font:{color:C.gold,size:15}}, height:360,
        yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'},
        showlegend:false}), CFG);
 
-  // Receita por loja por mês — linhas
+  // Receita por loja por mês — linhas com cores distintas
   const recLojas=['Goiania','Prime','Anapolis'];
   const recLojaLbls=['Goiânia','Prime','Anápolis'];
   const recMesLoja={};
@@ -662,42 +709,44 @@ function renderFat({rec}, prev){
   const rmlk=Object.keys(recMesLoja).sort();
   if(rmlk.length>0){
     const rmll=rmlk.map(monthLabel);
-    const lLineColors=[C.gold,C.goldL,C.orange];
+  const recLojaTextPos2 = {Goiania:'bottom center', Prime:'top center', Anapolis:'bottom center'};
     Plotly.react('ch-rec-loja',
       recLojas.map((l,i)=>({
         type:'scatter', name:recLojaLbls[i], x:rmll,
         y:rmlk.map(k=>recMesLoja[k][l]),
-        mode:'lines+markers', line:{color:lLineColors[i],width:2}, marker:{size:6},
-        hovertemplate:'%{x} — '+recLojaLbls[i]+': R$ %{y:,.2f}<extra></extra>'
+        mode:'lines+markers+text', line:{color:LOJA_COLORS[l],width:2.5}, marker:{size:7,color:LOJA_COLORS[l]},
+        text:rmlk.map(k=>recMesLoja[k][l]>0?`R$${(recMesLoja[k][l]/1000).toFixed(1)}k`:''),
+        textposition:recLojaTextPos2[l], textfont:{size:11,color:LOJA_COLORS[l]},
+        hovertemplate:'%{x} — '+recLojaLbls[i]+': <b>R$ %{y:,.2f}</b><extra></extra>'
       })),
-      L({title:{text:'Receita por Loja',font:{color:C.gold,size:14}},
-         height:280, showlegend:true, legend:{orientation:'h',y:1.04,x:0},
+      L({title:{text:'Receita por Loja',font:{color:C.gold,size:15}},
+         height:300, showlegend:true, legend:{orientation:'h',y:1.05,x:0,font:{size:14}},
          yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'},
          xaxis:{...L().xaxis,tickangle:rmlk.length>8?-45:0}}), CFG);
   } else {
     document.getElementById('ch-rec-loja').innerHTML='<div class="empty">Preencha a coluna "loja" em Contas a Receber para ver este gráfico</div>';
   }
 
-  // Particular vs Despachante
+  // Particular vs Despachante — cores distintas
   const ct=groupSum(rec,'conta','valor_recebido');
   const ck=Object.keys(ct);
   const cl=ck.map(k=>k.replace('Receita de Vistoria - ',''));
   Plotly.react('ch-rec-tipo',
     [{type:'pie', hole:.6, labels:cl, values:ck.map(k=>ct[k]),
-      marker:{colors:[C.gold,C.goldL]}, textinfo:'percent',
-      textfont:{size:14}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
-    L({title:{text:'Particular vs Despachante',font:{color:C.gold,size:14}},
-       height:280, legend:{orientation:'h',y:-.08,font:{size:13}}}), CFG);
+      marker:{colors:[C.gold, C.cyan, C.purple, C.green]}, textinfo:'percent',
+      textfont:{size:15}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
+    L({title:{text:'Particular vs Despachante',font:{color:C.gold,size:15}},
+       height:300, legend:{orientation:'h',y:-.08,font:{size:14}}}), CFG);
 
-  // Forma recebimento
+  // Forma recebimento — cores distintas
   const fm=groupSum(rec,'metodo_pagamento','valor_recebido');
   const fk=Object.keys(fm);
   Plotly.react('ch-rec-metodo',
     [{type:'pie', hole:.6, labels:fk, values:fk.map(k=>fm[k]),
       marker:{colors:PALETTE}, textinfo:'percent',
-      textfont:{size:14}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
-    L({title:{text:'Forma de Recebimento',font:{color:C.gold,size:14}},
-       height:280, showlegend:true, legend:{orientation:'h',y:-.08,font:{size:13}}}), CFG);
+      textfont:{size:15}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
+    L({title:{text:'Forma de Recebimento',font:{color:C.gold,size:15}},
+       height:300, showlegend:true, legend:{orientation:'h',y:-.08,font:{size:14}}}), CFG);
 
   // Status recebimento
   const sm=groupSum(rec,'status_pagamento','valor_recebido');
@@ -705,22 +754,22 @@ function renderFat({rec}, prev){
   Plotly.react('ch-rec-status',
     [{type:'pie', hole:.6, labels:sk, values:sk.map(k=>sm[k]),
       marker:{colors:sk.map(s=>s==='Pago'?C.green:C.orange)}, textinfo:'percent',
-      textfont:{size:14}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
-    L({title:{text:'Status do Recebimento',font:{color:C.gold,size:14}},
-       height:280, legend:{orientation:'h',y:-.08,font:{size:13}}}), CFG);
+      textfont:{size:15}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
+    L({title:{text:'Status do Recebimento',font:{color:C.gold,size:15}},
+       height:300, legend:{orientation:'h',y:-.08,font:{size:14}}}), CFG);
 
   // Top clientes
   const cm=groupSum(rec,'cliente','valor_recebido');
   const ckeys=Object.keys(cm).sort((a,b)=>cm[b]-cm[a]).slice(0,15);
   Plotly.react('ch-top-clientes',
     [{type:'bar', orientation:'h', x:ckeys.map(k=>cm[k]), y:ckeys,
-      marker:{color:ckeys.map((_,i)=>i===0?C.gold:C.goldD)},
-      text:ckeys.map(k=>BRL(cm[k])), textposition:'outside', textfont:{size:13},
+      marker:{color:ckeys.map((_,i)=>i===0?C.gold:i<3?C.goldL:C.goldD)},
+      text:ckeys.map(k=>BRL(cm[k])), textposition:'auto', cliponaxis:false, textfont:{size:13},
       hovertemplate:'%{y}: %{text}<extra></extra>'}],
-    L({title:{text:'Top Clientes / Despachantes',font:{color:C.gold,size:14}}, height:440,
-       xaxis:{...L().xaxis,showgrid:false},
-       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:13}},
-       margin:{t:44,l:10,r:160,b:38}}), CFG);
+    L({title:{text:'Top Clientes / Despachantes',font:{color:C.gold,size:15}}, height:460,
+       xaxis:{...L().xaxis,showgrid:false,range:[0,Math.max(...Object.values(cm))*1.35]},
+       yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:14}},
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
 
   // Tabela export
   const fatRows = rec.slice(0,200).map(r=>`<tr>
@@ -769,14 +818,14 @@ function renderDep({pag, vis}, prev){
   const dcInv = dc.map(c=>c===C.green?C.red:C.green);
   Plotly.react('ch-dep-mes',
     [{type:'scatter', name:'Despesas', x:dml, y:dmy, mode:'lines+markers+text',
-      line:{color:C.red,width:3}, marker:{size:8,color:C.red},
-      text:dmy.map(v=>`R$${(v/1000).toFixed(0)}k`), textposition:'top center',
-      textfont:{size:13,color:C.red},
-      hovertemplate:'%{x}: R$ %{y:,.2f}<extra></extra>'},
-     {type:'scatter', x:dx, y:dy.map(v=>v*1.22), mode:'text',
+      line:{color:C.red,width:3}, marker:{size:9,color:C.red},
+      text:dmy.map(v=>`R$${(v/1000).toFixed(1)}k`), textposition:'top center',
+      textfont:{size:12,color:C.red},
+      hovertemplate:'%{x}: <b>R$ %{y:,.2f}</b><extra></extra>'},
+     {type:'scatter', x:dx, y:dy.map(v=>v*1.32), mode:'text',
       text:dt, textfont:{size:12,color:dcInv}, showlegend:false, hoverinfo:'none'}],
-    L({title:{text:'Evolução Mensal de Despesas',font:{color:C.gold,size:14}},
-       height:320, showlegend:false,
+    L({title:{text:'Evolução Mensal de Despesas',font:{color:C.gold,size:15}},
+       height:360, showlegend:false,
        yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'}}), CFG);
 
   // Por categoria
@@ -784,34 +833,35 @@ function renderDep({pag, vis}, prev){
   const cks=Object.keys(cat).sort((a,b)=>cat[a]-cat[b]);
   Plotly.react('ch-dep-cat',
     [{type:'bar', orientation:'h', x:cks.map(k=>cat[k]), y:cks,
-      marker:{color:C.gold}, text:cks.map(k=>BRL(cat[k])),
-      textposition:'outside', textfont:{size:12},
+      marker:{color:cks.map((_,i)=>i===cks.length-1?C.gold:i>=cks.length-3?C.goldL:C.goldD)},
+      text:cks.map(k=>BRL(cat[k])),
+      textposition:'auto', cliponaxis:false, textfont:{size:13},
       hovertemplate:'%{y}: %{text}<extra></extra>'}],
-    L({title:{text:'Despesas por Categoria',font:{color:C.gold,size:14}}, height:520,
-       xaxis:{...L().xaxis,showgrid:false},
-       yaxis:{...L().yaxis,automargin:true,tickfont:{size:12}},
-       margin:{t:44,l:10,r:180,b:38}}), CFG);
+    L({title:{text:'Despesas por Categoria',font:{color:C.gold,size:15}}, height:540,
+       xaxis:{...L().xaxis,showgrid:false,range:[0, Math.max(...Object.values(cat))*1.35]},
+       yaxis:{...L().yaxis,automargin:true,tickfont:{size:13}},
+       margin:{t:48,l:10,r:20,b:40}}), CFG);
 
-  // Por loja — paleta dourada
+  // Por loja — cores distintas por loja
   const lj=groupSum(pag,'loja','valor');
   const lk=Object.keys(lj).filter(k=>k&&k!=='null');
   const ll=lk.map(l=>lojaLabel(l));
   Plotly.react('ch-dep-loja',
     [{type:'bar', x:ll, y:lk.map(k=>lj[k]),
       marker:{color:lk.map(l=>LOJA_COLORS[l]||C.goldD)},
-      text:lk.map(k=>BRL(lj[k])), textposition:'outside', textfont:{size:13},
+      text:lk.map(k=>BRL(lj[k])), textposition:'outside', textfont:{size:14},
       hovertemplate:'%{x}: %{text}<extra></extra>'}],
-    L({title:{text:'Por Loja',font:{color:C.gold,size:14}}, height:240,
+    L({title:{text:'Por Loja',font:{color:C.gold,size:15}}, height:260,
        showlegend:false, yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'},
-       margin:{t:44,l:10,r:10,b:38}}), CFG);
+       margin:{t:48,l:10,r:10,b:40}}), CFG);
 
   // Status pagamento
   Plotly.react('ch-dep-status',
     [{type:'pie', hole:.6, labels:['Pago','A Pagar'], values:[pgDone,apagar],
       marker:{colors:[C.green,C.red]}, textinfo:'percent',
-      textfont:{size:14}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
-    L({title:{text:'Status Pagamento',font:{color:C.gold,size:14}},
-       height:240, legend:{orientation:'h',y:-.1,font:{size:13}}}), CFG);
+      textfont:{size:15}, hovertemplate:'%{label}: R$ %{value:,.2f}<extra></extra>'}],
+    L({title:{text:'Status Pagamento',font:{color:C.gold,size:15}},
+       height:260, legend:{orientation:'h',y:-.1,font:{size:14}}}), CFG);
 
   // Próximos vencimentos
   const today=new Date(); today.setHours(0,0,0,0);
@@ -874,33 +924,67 @@ function renderFl({pag, rec}, prev){
   const ppEnt=pp?.rec.reduce((s,r)=>s+(r.valor_recebido||0),0);
   const ppSai=pp?.pag.filter(r=>r.status==='Pago').reduce((s,r)=>s+(r.valor||0),0);
 
+  const margem = totEnt>0 ? (totSal/totEnt*100) : null;
+  const margemClr = margem===null?C.gold:margem>=20?C.green:margem>=0?C.orange:C.red;
+
   kpi('kpi-fl-ent','Entradas', totEnt, ppEnt, 'receitas no período', C.green, true);
   kpi('kpi-fl-sai','Saídas', totSai, ppSai, 'despesas pagas', C.red, true);
   kpi('kpi-fl-saldo','Saldo', parseFloat(totSal.toFixed(2)), null,
       'entradas – saídas', totSal>=0?C.gold:C.red, true);
+  kpi('kpi-fl-margem','Margem Líquida',
+      margem!==null ? parseFloat(margem.toFixed(1))+'%' : '—', null,
+      margem!==null?(margem>=20?'Saudável':margem>=0?'Atenção':'Prejuízo'):'sem receitas',
+      margemClr, false);
   kpi('kpi-fl-prox30','Vence em 30d', parseFloat(prox30.toFixed(2)), null,
       'a pagar nos próx. 30 dias', C.orange, true);
 
-  // Gráfico de linhas puro: Entradas, Saídas, Saldo
+  // Gráfico de linhas: Entradas (topo), Saídas (baixo), Saldo (pontilhado, valores à direita)
+  const abbr = v => `R$${(v/1000).toFixed(1)}k`;
   Plotly.react('ch-fl-linhas',
     [{type:'scatter', name:'Entradas', x:lbl, y:ent, mode:'lines+markers+text',
-      line:{color:C.green,width:2.5}, marker:{size:7,color:C.green},
-      text:ent.map(v=>`R$${(v/1000).toFixed(0)}k`), textposition:'top center',
-      textfont:{size:12,color:C.green},
-      hovertemplate:'%{x} Entradas: R$ %{y:,.2f}<extra></extra>'},
+      line:{color:C.green,width:3}, marker:{size:8,color:C.green},
+      text:ent.map(abbr), textposition:'top center', textfont:{size:12,color:C.green},
+      hovertemplate:'%{x} — Entradas: <b>R$ %{y:,.2f}</b><extra></extra>'},
      {type:'scatter', name:'Saídas', x:lbl, y:sai, mode:'lines+markers+text',
-      line:{color:C.red,width:2.5}, marker:{size:7,color:C.red},
-      text:sai.map(v=>`R$${(v/1000).toFixed(0)}k`), textposition:'bottom center',
-      textfont:{size:12,color:C.red},
-      hovertemplate:'%{x} Saídas: R$ %{y:,.2f}<extra></extra>'},
+      line:{color:C.red,width:3}, marker:{size:8,color:C.red},
+      text:sai.map(abbr), textposition:'bottom center', textfont:{size:12,color:C.red},
+      hovertemplate:'%{x} — Saídas: <b>R$ %{y:,.2f}</b><extra></extra>'},
      {type:'scatter', name:'Saldo', x:lbl, y:sal, mode:'lines+markers+text',
-      line:{color:C.gold,width:3}, marker:{color:sal.map(s=>s>=0?C.green:C.red),size:9},
-      text:sal.map(v=>`R$${(v/1000).toFixed(0)}k`), textposition:'top center',
-      textfont:{size:12,color:C.gold},
-      hovertemplate:'%{x} Saldo: R$ %{y:,.2f}<extra></extra>'}],
-    L({title:{text:'Entradas vs Saídas e Saldo por Mês',font:{color:C.gold,size:14}},
-       height:420, showlegend:true, legend:{orientation:'h',y:1.04,x:0},
+      line:{color:C.gold,width:3.5,dash:'dot'}, marker:{color:sal.map(s=>s>=0?C.green:C.red),size:10},
+      text:sal.map(abbr), textposition:'middle right', textfont:{size:12,color:C.gold},
+      hovertemplate:'%{x} — Saldo: <b>R$ %{y:,.2f}</b><extra></extra>'}],
+    L({title:{text:'Entradas vs Saídas e Saldo por Mês',font:{color:C.gold,size:15}},
+       height:440, showlegend:true, legend:{orientation:'h',y:1.05,x:0,font:{size:14}},
        yaxis:{...L().yaxis,showticklabels:false},
+       xaxis:{...L().xaxis,tickangle:allMes.length>8?-45:0}}), CFG);
+
+  // Barras verticais: Receita x Despesa por mês
+  Plotly.react('ch-fl-barras',
+    [{type:'bar', name:'Receita', x:lbl, y:ent,
+      marker:{color:C.green, opacity:0.85},
+      text:ent.map(abbr), textposition:'outside', textfont:{size:12,color:C.green},
+      hovertemplate:'%{x} — Receita: <b>R$ %{y:,.2f}</b><extra></extra>'},
+     {type:'bar', name:'Despesa', x:lbl, y:sai,
+      marker:{color:C.red, opacity:0.85},
+      text:sai.map(abbr), textposition:'outside', textfont:{size:12,color:C.red},
+      hovertemplate:'%{x} — Despesa: <b>R$ %{y:,.2f}</b><extra></extra>'}],
+    L({title:{text:'Receita vs Despesa por Mês',font:{color:C.gold,size:15}},
+       barmode:'group', height:360, showlegend:true,
+       legend:{orientation:'h',y:1.05,x:0,font:{size:13}},
+       yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'},
+       xaxis:{...L().xaxis,tickangle:allMes.length>8?-45:0}}), CFG);
+
+  // Barras verticais: Saldo por mês (verde=positivo, vermelho=negativo)
+  Plotly.react('ch-fl-saldo',
+    [{type:'bar', name:'Saldo', x:lbl, y:sal,
+      marker:{color:sal.map(s=>s>=0?C.green:C.red), opacity:0.9},
+      text:sal.map(abbr), textposition:'outside', textfont:{size:12,color:sal.map(s=>s>=0?C.green:C.red)},
+      hovertemplate:'%{x} — Saldo: <b>R$ %{y:,.2f}</b><extra></extra>'}],
+    L({title:{text:'Saldo por Mês',font:{color:C.gold,size:15}},
+       height:360, showlegend:false,
+       shapes:[{type:'line',x0:-0.5,x1:lbl.length-0.5,y0:0,y1:0,
+                line:{color:'#555',width:1.5,dash:'dot'}}],
+       yaxis:{...L().yaxis,showticklabels:false,zeroline:false},
        xaxis:{...L().xaxis,tickangle:allMes.length>8?-45:0}}), CFG);
 
   // Tabela export fluxo
@@ -938,6 +1022,52 @@ function renderCob(){
   kpi('kpi-cob-ticket','Ticket Médio em Aberto', parseFloat(ticket.toFixed(2)), null, '', C.gold, true);
   kpi('kpi-cob-maior','Maior em Aberto', maiorDevedor, null,
       porCliente[maiorDevedor]?BRL(porCliente[maiorDevedor]):'', C.orange);
+
+  // Evolução de inadimplência por mês (todos os Em Aberto de _REC, independente de filtros)
+  const cobMes={};
+  _REC.filter(r=>r.status_pagamento==='Em Aberto'&&r._d).forEach(r=>{
+    const mk=r._d.getFullYear()+'-'+String(r._d.getMonth()+1).padStart(2,'0');
+    cobMes[mk]=(cobMes[mk]||0)+(r.valor_recebido||0);
+  });
+  const cobMks=Object.keys(cobMes).sort();
+  const cobLbl=cobMks.map(monthLabel);
+  const cobVals=cobMks.map(k=>cobMes[k]);
+  if(cobMks.length){
+    Plotly.react('ch-cob-evolucao',
+      [{type:'bar', x:cobLbl, y:cobVals,
+        marker:{color:cobVals.map((_,i)=>i===cobVals.length-1?C.red:C.orange), opacity:0.85},
+        text:cobVals.map(v=>`R$${(v/1000).toFixed(1)}k`),
+        textposition:'outside', textfont:{size:12,color:'#FFF'},
+        hovertemplate:'%{x}: <b>R$ %{y:,.2f}</b> em aberto<extra></extra>'}],
+      L({title:{text:'Inadimplência por Mês (Em Aberto)',font:{color:C.gold,size:15}},
+         height:320, showlegend:false,
+         yaxis:{...L().yaxis,showticklabels:false,rangemode:'tozero'},
+         xaxis:{...L().xaxis,tickangle:cobMks.length>8?-45:0}}), CFG);
+  } else {
+    document.getElementById('ch-cob-evolucao').innerHTML='<div class="empty">Sem dados</div>';
+  }
+
+  // Top devedores (bar horizontal)
+  const porClienteAll={};
+  _REC.filter(r=>r.status_pagamento==='Em Aberto').forEach(r=>{
+    const c=r.cliente||'Desconhecido';
+    porClienteAll[c]=(porClienteAll[c]||0)+(r.valor_recebido||0);
+  });
+  const topDev=Object.keys(porClienteAll).sort((a,b)=>porClienteAll[b]-porClienteAll[a]).slice(0,12);
+  if(topDev.length){
+    Plotly.react('ch-cob-porcliente',
+      [{type:'bar', orientation:'h', x:topDev.map(k=>porClienteAll[k]), y:topDev,
+        marker:{color:topDev.map((_,i)=>i===0?C.red:i<3?C.orange:C.goldD)},
+        text:topDev.map(k=>BRL(porClienteAll[k])),
+        textposition:'auto', cliponaxis:false, textfont:{size:12},
+        hovertemplate:'%{y}: <b>%{text}</b><extra></extra>'}],
+      L({title:{text:'Top Devedores',font:{color:C.gold,size:15}}, height:320,
+         xaxis:{...L().xaxis,showgrid:false,range:[0,Math.max(...topDev.map(k=>porClienteAll[k]))*1.35]},
+         yaxis:{...L().yaxis,automargin:true,autorange:'reversed',tickfont:{size:13}},
+         margin:{t:48,l:10,r:20,b:40}}), CFG);
+  } else {
+    document.getElementById('ch-cob-porcliente').innerHTML='<div class="empty">Nenhum devedor</div>';
+  }
 
   if(!aberto.length){
     document.getElementById('tbl-cob').innerHTML='<div class="empty">Nenhum recebimento em aberto</div>';
@@ -1031,20 +1161,7 @@ function showTab(btn, name){
 }
 
 // ── PERIOD / FILTERS ──────────────────────────────────────────────────────────
-function setPeriod(p){
-  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  const now=new Date(); now.setHours(23,59,59,999);
-  let from=null;
-  if(p==='7d')  { from=new Date(+now-6*864e5); from.setHours(0,0,0,0); }
-  if(p==='30d') { from=new Date(+now-29*864e5); from.setHours(0,0,0,0); }
-  if(p==='90d') { from=new Date(+now-89*864e5); from.setHours(0,0,0,0); }
-  if(p==='mtd') { from=new Date(now.getFullYear(),now.getMonth(),1); }
-  if(p==='ytd') { from=new Date(now.getFullYear(),0,1); }
-  if(p==='all') { S.from=null; S.to=null; syncDateInputs(); renderAll(); return; }
-  S.from=from; S.to=now;
-  syncDateInputs(); renderAll();
-}
+// setPeriod definida no bloco INIT abaixo
 
 function syncDateInputs(){
   const fmt=d=>d?d.toISOString().split('T')[0]:'';
@@ -1070,6 +1187,21 @@ function onFilterChange(){
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 renderAll();
+function setPeriod(p, ev){
+  const e = ev || event;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  if(e && e.target) e.target.classList.add('active');
+  const now=new Date(); now.setHours(23,59,59,999);
+  let from=null;
+  if(p==='7d')  { from=new Date(+now-6*864e5); from.setHours(0,0,0,0); }
+  if(p==='30d') { from=new Date(+now-29*864e5); from.setHours(0,0,0,0); }
+  if(p==='90d') { from=new Date(+now-89*864e5); from.setHours(0,0,0,0); }
+  if(p==='mtd') { from=new Date(now.getFullYear(),now.getMonth(),1); }
+  if(p==='ytd') { from=new Date(now.getFullYear(),0,1); }
+  if(p==='all') { S.from=null; S.to=null; syncDateInputs(); renderAll(); return; }
+  S.from=from; S.to=now;
+  syncDateInputs(); renderAll();
+}
 </script>
 </body>
 </html>
